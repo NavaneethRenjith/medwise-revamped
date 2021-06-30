@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "532591545260",
+    "project_id": "medwise-revamped",
+    "storage_bucket": "medwise-revamped.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532591545260:android:3a72f72b39682cbdabc809",
+        "android_client_info": {
+          "package_name": "com.example.medwise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532591545260-80h26co9p4sliopfb0n92arjjiajkf7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNir2D2DK4cbd4YmcIGhnszxS_ayjB5f4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532591545260-80h26co9p4sliopfb0n92arjjiajkf7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
