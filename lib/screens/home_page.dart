@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../theme/theme.dart';
 import './task_screen.dart';
 import './connect_screen.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  //! Display name dynamically
+  final _user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,10 @@ class HomePage extends StatelessWidget {
             icon: Icon(
               Icons.account_circle_sharp,
             ),
-            onPressed: () {},
+            onPressed: () {
+              //! Temporary solution for loging out, until profile page is created
+              FirebaseAuth.instance.signOut();
+            },
           ),
         ],
       ),
@@ -49,7 +55,8 @@ class HomePage extends StatelessWidget {
               bottom: MediaQuery.of(context).size.height * (1 / 30),
             ),
             child: Text(
-              'Jacob!',
+              //! Display name dynamically
+              'Jacob',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,

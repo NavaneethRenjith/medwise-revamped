@@ -1,186 +1,190 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
+
+  final void Function(
+    String name,
+    String email,
+    String phone,
+    String dob,
+    String password,
+    bool isLogin,
+  ) submitFn;
+
   AuthForm(this.submitFn, this.isLoading);
-  final void Function(String name, String email, String phone, String dob,
-      String password, bool isLogin, BuildContext context) submitFn;
+
   @override
   _AuthFormState createState() => _AuthFormState();
 }
 
 class _AuthFormState extends State<AuthForm> {
-  final _formKey = GlobalKey<FormState>();
-  var _isLogin = true;
-  var _userEmail = '';
-  var _userName = '';
-  var _userPassword = '';
-  var _userPhonenumber = '';
-  var _userDob = '';
+  final _formKey = GlobalKey<FormState>(); //To validate the form
+  var _isLogin = true; // Show login page
+
+  String _userEmail = '';
+  String _userName = '';
+  String _userPassword = '';
+  String _userPhonenumber = '';
+  late String _userDob;
 
   void _trySubmit() {
+    // Trigger all the validators of all TextFormFields in the form
     final isValid = _formKey.currentState!.validate();
+
+    // To close any soft keyboard that might still be open
     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState!.save();
-      widget.submitFn(
-          _userName.trim(),
-          _userEmail.trim(),
-          _userPhonenumber.trim(),
-          _userDob.trim(),
-          _userPassword.trim(),
-          _isLogin,
-          context);
-      // Use those values to send our auth request ...
 
+      if (_selectedDate == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Please select your DOB'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
+      }
+
+      // function call
+      widget.submitFn(
+        _userName.trim(),
+        _userEmail.trim(),
+        _userPhonenumber.trim(),
+        _userDob.trim(),
+        _userPassword.trim(),
+        _isLogin,
+      );
     }
   }
 
   var myFormat = DateFormat('d-MM-yyyy');
-  DateTime _selectedDate = DateTime.now();
+  DateTime? _selectedDate;
   void _presentDatePicker() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1990),
-      lastDate: DateTime(2022),
+      firstDate: DateTime(1921),
+      lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) return;
       setState(() {
         _selectedDate = pickedDate;
-        _userDob = myFormat.format(_selectedDate).toString();
+        _userDob = myFormat.format(_selectedDate!).toString();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        margin: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  if (!_isLogin)
-                    TextFormField(
-                      key: ValueKey('name'),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length < 5) {
-                          return 'Please enter at least 4 characters';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Your name'),
-                      onSaved: (value) {
-                        _userName = value!;
-                      },
-                    ),
+    return Card(
+      margin: const EdgeInsets.all(24),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                if (!_isLogin)
                   TextFormField(
-                    key: ValueKey('email'),
+                    key: ValueKey('name'),
                     validator: (value) {
-                      if (value!.isEmpty || !value.contains('@')) {
-                        return 'Please enter a valid email address.';
+                      if (value!.isEmpty || value.length < 5) {
+                        return 'Please enter at least 4 characters';
                       }
                       return null;
                     },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email address',
-                    ),
+                    decoration: InputDecoration(labelText: 'Your name'),
                     onSaved: (value) {
-                      _userEmail = value!;
+                      _userName = value!;
                     },
                   ),
-                  if (!_isLogin)
-                    TextFormField(
-                      key: ValueKey('userphonenumber'),
-                      validator: (value) {
-                        if (value!.isEmpty || value.length != 10) {
-                          return 'Invalid Phone number';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(labelText: 'Phone number'),
-                      onSaved: (value) {
-                        _userPhonenumber = value!;
-                      },
-                    ),
-                  SizedBox(
-                    height: 15,
+                TextFormField(
+                  key: ValueKey('email'),
+                  validator: (value) {
+                    if (value!.isEmpty || !value.contains('@')) {
+                      return 'Please enter a valid email address.';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Email address',
                   ),
-                  if (!_isLogin)
-                    GestureDetector(
-                      onTap: () {
-                        _presentDatePicker();
-                        //  if (_userDob.isEmpty) return 'Select DOB';
-                      },
-                      child: Container(
-                          child: Row(
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.calendar_today),
-                              onPressed: () {
-                                _presentDatePicker();
-                                print(_selectedDate);
-                              }),
-                          Text(
-                            _selectedDate != null
-                                ? myFormat.format(_selectedDate).toString()
-                                : "Select your DOB",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ],
-                      )),
-                    ),
-                  if (!_isLogin)
-                    Divider(
-                      thickness: 2.0,
-                    ),
+                  onSaved: (value) {
+                    _userEmail = value!;
+                  },
+                ),
+                if (!_isLogin)
                   TextFormField(
-                    key: ValueKey('password'),
+                    key: ValueKey('userphonenumber'),
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 7) {
-                        return 'Password must be at least 7 characters long.';
+                      if (value!.isEmpty || value.length != 10) {
+                        return 'Invalid Phone number';
                       }
                       return null;
                     },
-                    decoration: InputDecoration(labelText: 'Password'),
-                    obscureText: true,
+                    decoration: InputDecoration(labelText: 'Phone number'),
                     onSaved: (value) {
-                      _userPassword = value!;
+                      _userPhonenumber = value!;
                     },
                   ),
-                  SizedBox(height: 12),
-                  if (widget.isLoading) CircularProgressIndicator(),
-                  if (!widget.isLoading)
-                    RaisedButton(
-                      child: Text(_isLogin ? 'Login' : 'Signup'),
-                      onPressed: _trySubmit,
+                if (!_isLogin)
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 10,
                     ),
-                  if (!widget.isLoading)
-                    FlatButton(
-                      textColor: Theme.of(context).primaryColor,
-                      child: Text(_isLogin
-                          ? 'Create new account'
-                          : 'I already have an account'),
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
-                      },
-                    )
-                ],
-              ),
+                    alignment: Alignment.centerLeft,
+                    child: TextButton.icon(
+                      onPressed: _presentDatePicker,
+                      icon: Icon(Icons.calendar_today),
+                      label: Text(
+                        _selectedDate != null
+                            ? myFormat.format(_selectedDate!).toString()
+                            : "Select your DOB",
+                      ),
+                    ),
+                  ),
+                TextFormField(
+                  key: ValueKey('password'),
+                  validator: (value) {
+                    if (value!.isEmpty || value.length < 8) {
+                      return 'Password must be at least 8 characters long.';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  onSaved: (value) {
+                    _userPassword = value!;
+                  },
+                ),
+                SizedBox(height: 12),
+                if (widget.isLoading) CircularProgressIndicator(),
+                if (!widget.isLoading)
+                  ElevatedButton(
+                    child: Text(_isLogin ? 'Login' : 'Signup'),
+                    onPressed: _trySubmit,
+                  ),
+                if (!widget.isLoading)
+                  TextButton(
+                    child: Text(_isLogin
+                        ? 'Create new account'
+                        : 'I already have an account'),
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                    style: TextButton.styleFrom(
+                      primary: Colors.black87,
+                    ),
+                  )
+              ],
             ),
           ),
         ),
