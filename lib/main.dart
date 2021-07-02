@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
-import './screens/home_page.dart';
+import './screens/home_screen.dart';
 import './screens/task_screen.dart';
 import './screens/connect_screen.dart';
 import './screens/auth_screen.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, userSnapshot) {
           if (userSnapshot.hasData) {
-            return HomePage();
+            return HomeScreen();
           }
           return AuthScreen();
         },

@@ -27,7 +27,7 @@ class _AuthFormState extends State<AuthForm> {
   String _userName = '';
   String _userPassword = '';
   String _userPhonenumber = '';
-  late String _userDob;
+  String _userDob = '';
 
   void _trySubmit() {
     // Trigger all the validators of all TextFormFields in the form
@@ -38,15 +38,6 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState!.save();
-
-      if (_selectedDate == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Please select your DOB'),
-            backgroundColor: Theme.of(context).errorColor,
-          ),
-        );
-      }
 
       // function call
       widget.submitFn(
