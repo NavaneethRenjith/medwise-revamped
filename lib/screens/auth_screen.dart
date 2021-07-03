@@ -92,30 +92,34 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: blue,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            child: Text(
-              'Medwise',
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 4,
-                color: Colors.white,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Text(
+                  'Medwise',
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 4,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            child: Text(
-              'Your personal health assistant',
-              style: TextStyle(
-                color: background,
+              Container(
+                child: Text(
+                  'Your personal health assistant',
+                  style: TextStyle(
+                    color: background,
+                  ),
+                ),
               ),
-            ),
+              AuthForm(_submitAuthForm, _isLoading),
+            ],
           ),
-          AuthForm(_submitAuthForm, _isLoading),
-        ],
+        ),
       ),
     );
   }
