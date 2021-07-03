@@ -30,6 +30,9 @@ class _AuthFormState extends State<AuthForm> {
   late String _userDob;
 
   void _trySubmit() {
+    if (_isLogin) {
+      _userDob = "";
+    }
     // Trigger all the validators of all TextFormFields in the form
     final isValid = _formKey.currentState!.validate();
 
@@ -39,7 +42,7 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState!.save();
 
-      if (_selectedDate == null) {
+      if (_selectedDate == null && !_isLogin) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Please select your DOB'),
