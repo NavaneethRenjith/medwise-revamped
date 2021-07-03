@@ -1,6 +1,6 @@
 # medwise
 
-A new Flutter project.
+Personal medical assistant app using flutter
 
 ## Getting Started
 
