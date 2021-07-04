@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:medwise/screens/profile_page.dart';
 
 import '../theme/theme.dart';
 import './task_screen.dart';
 import './connect_screen.dart';
+import 'profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   //! Display name dynamically
@@ -63,13 +63,16 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(
               Icons.account_circle_sharp,
             ),
-            onPressed: () {
+            onPressed: () async {
               //! Temporary solution for loging out, until profile page is created
               //FirebaseAuth.instance.signOut();
-              Navigator.of(context).push(MaterialPageRoute(
+              await Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProfilePage(
                         uid: _user!.uid,
                       )));
+              setState(() {
+                getCurrentUser();
+              });
             },
           ),
         ],
