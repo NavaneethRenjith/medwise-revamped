@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
 import './screens/home_screen.dart';
-import './screens/task_screen.dart';
-import './screens/connect_screen.dart';
+import './screens/task/task_screen.dart';
+import './screens/connect/connect_screen.dart';
 import './screens/auth_screen.dart';
 
 void main() async {

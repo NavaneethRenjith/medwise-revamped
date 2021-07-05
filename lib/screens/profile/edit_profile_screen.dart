@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class EditProfile extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
   final String username, phone, email;
 
-  EditProfile({
+  EditProfileScreen({
     required this.username,
     required this.phone,
     required this.email,
   });
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   String newusername = '';
   String newphone = '';
   String newemail = '';
