@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/profile.dart';
+
 import './task/task_screen.dart';
 import './connect/connect_screen.dart';
 import 'profile/profile_page.dart';
@@ -24,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var _username = '';
   var _userPhone = '';
   late String _userEmail;
+  late Profile _profile;
 
   void _getCurrentUser() async {
     _userId = _user!.uid;
@@ -37,6 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _username = userData.data()!['name'];
       _userPhone = userData.data()!['phone_number'];
+
+      // Profile model
+      _profile = new Profile(
+        username: _username,
+        userEmail: _userEmail,
+        userPhone: _userPhone,
+      );
     });
   }
 
@@ -66,9 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (ctx) => ProfilePage(
-                    username: _username,
-                    userEmail: _userEmail,
-                    userPhone: _userPhone,
+                    // username: _username,
+                    // userEmail: _userEmail,
+                    // userPhone: _userPhone,
+                    profile: _profile,
                   ),
                 ),
               );
@@ -98,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     left: 34,
                   ),
                   child: Text(
-                    _username,
+                    _username.split(" ")[0],
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -153,6 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   desc: 'Keep track of your medical history',
                   imageLoc: 'assets/images/history.png',
                   containerColor: orange,
+                ),
+                SizedBox(
+                  height: 50,
                 ),
               ],
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../models/profile.dart';
+
 import './edit_profile_screen.dart';
 
 import '../../widgets/profile/profile_details.dart';
@@ -13,16 +15,11 @@ enum MoreOptions {
 }
 
 class ProfilePage extends StatefulWidget {
-  final String username;
-  final String userEmail;
-  final String userPhone;
+  final Profile profile;
 
-  const ProfilePage({
-    Key? key,
-    required this.username,
-    required this.userEmail,
-    required this.userPhone,
-  }) : super(key: key);
+  ProfilePage({
+    required this.profile,
+  });
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -54,9 +51,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (ctx) => EditProfileScreen(
-                      username: widget.username,
-                      phone: widget.userPhone,
-                      email: widget.userEmail,
+                      username: widget.profile.username,
+                      phone: widget.profile.userPhone,
+                      email: widget.profile.userEmail,
                     ),
                   ),
                 );
@@ -117,9 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               ProfileDetails(
-                username: widget.username,
-                userPhone: widget.userPhone,
-                userEmail: widget.userEmail,
+                profile: widget.profile,
               ),
               PaymentMethods(),
               ListTile(

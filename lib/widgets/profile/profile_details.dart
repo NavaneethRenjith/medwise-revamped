@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../models/profile.dart';
+
 class ProfileDetails extends StatelessWidget {
-  final String username;
-  final String userEmail;
-  final String userPhone;
+  final Profile profile;
 
   const ProfileDetails({
     Key? key,
-    required this.username,
-    required this.userEmail,
-    required this.userPhone,
+    required this.profile,
   }) : super(key: key);
 
   @override
@@ -21,7 +19,7 @@ class ProfileDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                username,
+                profile.username,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
@@ -32,7 +30,7 @@ class ProfileDetails extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "+91 $userPhone",
+                "+91 ${profile.userPhone}",
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 15,
@@ -42,7 +40,7 @@ class ProfileDetails extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                userEmail,
+                profile.userEmail,
                 style: TextStyle(
                   color: Colors.white70,
                   fontSize: 15,
