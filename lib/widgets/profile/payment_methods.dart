@@ -10,7 +10,7 @@ class PaymentMethods extends StatelessWidget {
         vertical: MediaQuery.of(context).size.height / 12,
       ),
       padding: const EdgeInsets.all(16),
-      height: 200, //MediaQuery.of(context).size.height / 4
+      height: 220,
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.all(

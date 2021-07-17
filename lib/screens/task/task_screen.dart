@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
+import './new_task_screen.dart';
+
 import '../../theme/theme.dart';
 import '../../widgets/task/date.dart';
 import '../../widgets/task/task_list_item.dart';
@@ -82,6 +84,18 @@ class _TaskScreenState extends State<TaskScreen> {
             ],
           );
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => NewTaskScreen(),
+            ),
+          );
+        },
+        backgroundColor: blue,
+        child: Icon(Icons.add),
       ),
     );
   }

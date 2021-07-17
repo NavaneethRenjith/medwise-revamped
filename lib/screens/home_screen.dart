@@ -61,9 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: background,
+        elevation: 0,
         title: Text(
           'Medwise',
-          style: TextStyle(color: blue),
+          style: TextStyle(color: blue, fontFamily: 'Roboto'),
         ),
         actions: [
           IconButton(
@@ -76,9 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (ctx) => ProfilePage(
-                    // username: _username,
-                    // userEmail: _userEmail,
-                    // userPhone: _userPhone,
                     profile: _profile,
                   ),
                 ),

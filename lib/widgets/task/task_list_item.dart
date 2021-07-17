@@ -71,6 +71,7 @@ class _TaskListItemState extends State<TaskListItem> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Roboto',
                             color: blue,
                           ),
                         ),
