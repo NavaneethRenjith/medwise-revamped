@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../theme/theme.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/task/new_task_form.dart';
 
-class NewTaskScreen extends StatefulWidget {
+class NewTaskScreen extends StatelessWidget {
   const NewTaskScreen({Key? key}) : super(key: key);
 
-  @override
-  _NewTaskScreenState createState() => _NewTaskScreenState();
-}
+  void _submitTask(
+    String title,
+    String desc,
+    String tag,
+    DateTime date,
+    TimeOfDay time,
+  ) {
+    print(title);
+    print(desc);
+    print(tag);
+    final dateTime =
+        DateTime(date.year, date.month, date.day, time.hour, time.minute);
+    print(dateTime);
+  }
 
-class _NewTaskScreenState extends State<NewTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +32,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: NewTaskForm(),
+        child: NewTaskForm(_submitTask),
       ),
     );
   }
