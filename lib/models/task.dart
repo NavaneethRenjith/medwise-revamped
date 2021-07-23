@@ -1,4 +1,5 @@
 class Task {
+  String id;
   String title;
   String desc;
   String tag;
@@ -6,6 +7,7 @@ class Task {
   bool done;
 
   Task({
+    required this.id,
     required this.title,
     required this.desc,
     required this.tag,

@@ -14,6 +14,8 @@ class TaskListItem extends StatefulWidget {
     String docId,
   ) changeUserTaskDone;
 
+  final void Function(String docId) deleteTask;
+
   TaskListItem({
     Key? key,
     required this.id,
@@ -22,6 +24,7 @@ class TaskListItem extends StatefulWidget {
     required this.time,
     required this.taskDone,
     required this.changeUserTaskDone,
+    required this.deleteTask,
   }) : super(key: key);
 
   @override
@@ -47,7 +50,36 @@ class _TaskListItemState extends State<TaskListItem> {
         padding: const EdgeInsets.only(right: 10),
       ),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {},
+      confirmDismiss: (direction) async {
+        return await showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Delete Task'),
+              content: Text(
+                  'Are you sure you want to delete Task: ${widget.title}?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    widget.deleteTask(widget.id);
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Delete',
+                    style: TextStyle(color: Theme.of(context).errorColor),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
       child: Opacity(
         opacity: !widget.taskDone ? 1 : 0.4,
         child: Card(

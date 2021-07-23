@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../theme/theme.dart';
 import '../../widgets/custom_appbar.dart';
@@ -15,12 +16,22 @@ class NewTaskScreen extends StatelessWidget {
     DateTime date,
     TimeOfDay time,
   ) {
-    print(title);
-    print(desc);
-    print(tag);
     final dateTime =
         DateTime(date.year, date.month, date.day, time.hour, time.minute);
-    print(dateTime);
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('tasks')
+        .add({
+      'title': title,
+      'desc': desc,
+      'dateTime': dateTime,
+      'tag': tag,
+      'done': false,
+    });
   }
 
   @override

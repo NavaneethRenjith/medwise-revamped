@@ -87,6 +87,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   );
                   return;
                 }
+
                 widget.submitTask(
                   _titleController.text,
                   _descController.text,
@@ -94,7 +95,9 @@ class _NewTaskFormState extends State<NewTaskForm> {
                   _selectedDate!,
                   _selectedTime!,
                 );
+
                 FocusScope.of(context).unfocus();
+                Navigator.pop(context);
               },
               child: Text(
                 'Add Task',

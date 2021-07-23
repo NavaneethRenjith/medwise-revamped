@@ -32,6 +32,15 @@ class _TaskScreenState extends State<TaskScreen> {
     });
   }
 
+  void _deleteTask(String docId) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_user!.uid)
+        .collection('tasks')
+        .doc(docId)
+        .delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +85,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       time: DateFormat.jm().format(dateTime).toString(),
                       taskDone: taskDocs[i]['done'],
                       changeUserTaskDone: _changeUserTaskDone,
+                      deleteTask: _deleteTask,
                     );
                   },
                   childCount: taskDocs.length,
