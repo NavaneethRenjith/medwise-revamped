@@ -74,6 +74,7 @@ class _NewTaskFormState extends State<NewTaskForm> {
           ),
           dateAndTime(context),
           tagAndRepeatSection(),
+          //Add task
           SizedBox(
             width: double.infinity,
             child: TextButton(
